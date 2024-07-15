@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "EquipX"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3b924055-1d10-4270-8fb1-88842f524a6d"
+  }
+}

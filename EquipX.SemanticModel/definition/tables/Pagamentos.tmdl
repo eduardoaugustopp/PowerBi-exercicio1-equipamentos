@@ -1,0 +1,69 @@
+table Pagamentos
+	lineageTag: 6193440b-a3b4-4215-bdf2-2eef655dd272
+
+	column 'Id pedido'
+		dataType: string
+		lineageTag: a15bf76d-b322-4790-90ef-b26446600896
+		summarizeBy: none
+		sourceColumn: Id pedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parcelas
+		dataType: int64
+		formatString: 0
+		lineageTag: 18b10009-7ca3-479f-94d0-59e860c30695
+		summarizeBy: sum
+		sourceColumn: Parcelas
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pagamento sequencial'
+		dataType: int64
+		formatString: 0
+		lineageTag: bca1afda-6a24-4b2e-85b2-2a0ede18d9cb
+		summarizeBy: sum
+		sourceColumn: Pagamento sequencial
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor pagamento'
+		dataType: decimal
+		formatString: 0
+		lineageTag: 35ed8e9e-df68-450b-a5a7-a2c83c7eb518
+		summarizeBy: sum
+		sourceColumn: Valor pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Forma de pagamento'
+		dataType: string
+		lineageTag: 14f6bded-bef6-4843-a78f-af6844fd1367
+		summarizeBy: none
+		sourceColumn: Forma de pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Pagamentos = m
+		mode: import
+		source =
+				let
+				    Fonte = MySQL.Database("localhost", "exercicio", [ReturnSingleDatabase=true]),
+				    exercicio_tb_olist_pagamentos = Fonte{[Schema="exercicio",Item="tb_olist_pagamentos"]}[Data],
+				    #"Texto Extraído Após o Delimitador" = Table.TransformColumns(exercicio_tb_olist_pagamentos, {{"payment_type", each Text.AfterDelimiter(_, "#"), type text}}),
+				    #"Consultas Mescladas" = Table.NestedJoin(#"Texto Extraído Após o Delimitador", {"payment_type"}, tradução, {"Inglês"}, "tradução", JoinKind.FullOuter),
+				    #"tradução Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas", "tradução", {"Português "}, {"tradução.Português "}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"tradução Expandido",{{"order_id", "Id pedido"}, {"payment_installments", "Parcelas"}, {"payment_sequential", "Pagamento sequencial"}, {"payment_value", "Valor pagamento"}}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Colunas Renomeadas",{"payment_type"}),
+				    #"Colunas Renomeadas1" = Table.RenameColumns(#"Colunas Removidas",{{"tradução.Português ", "Forma de pagamento"}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Colunas Renomeadas1", each ([Forma de pagamento] <> null)),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Linhas Filtradas", each ([Forma de pagamento] = "Cartão de crédito" or [Forma de pagamento] = "Cartão de débito")),
+				    #"Linhas Filtradas2" = Table.SelectRows(#"Linhas Filtradas1", each [Forma de pagamento] <> null and [Forma de pagamento] <> ""),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Linhas Filtradas2",{{"Parcelas", Int64.Type}, {"Pagamento sequencial", Int64.Type}, {"Valor pagamento", Currency.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

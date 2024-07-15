@@ -1,0 +1,19 @@
+relationship AutoDetected_954a5a0e-c188-4a1b-a7d8-c3acbb41c810
+	fromColumn: Vendas.'ID Produto'
+	toColumn: Produtos.'ID Produto'
+
+relationship 4f2b606e-1f18-4fdc-baff-e9fc79bfbc7b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Vendas.'Data de compra'
+	toColumn: LocalDateTable_90be4f2c-0e6f-4b19-977b-35598402e034.Date
+
+relationship 75736319-88cb-8bed-6b77-1ec278928133
+	fromColumn: Vendas.'ID Consumidor'
+	toColumn: Clientes.'ID Consumidor'
+
+relationship AutoDetected_4cd0b78e-48ce-4031-8ec9-4bf1fec7a513
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Produtos_EquipX.'Nome produto'
+	toColumn: Produtos.'Nome produto'
+

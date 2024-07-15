@@ -1,0 +1,45 @@
+table 'Vendas por semana'
+	lineageTag: 58cdfa1f-57d8-47e4-ad7f-be8e23e6c713
+
+	column Semanas
+		dataType: int64
+		formatString: 0
+		lineageTag: 69600300-b93d-4929-a5f8-625cd6086781
+		summarizeBy: sum
+		sourceColumn: Semanas
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendas
+		dataType: int64
+		formatString: 0
+		lineageTag: 0dfd2ec3-1765-4814-b327-82b2d862a225
+		summarizeBy: sum
+		sourceColumn: Vendas
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Meta de vendas'
+		dataType: int64
+		formatString: 0
+		lineageTag: d031d5fa-603b-4af2-bdf7-ba4495adaf9a
+		summarizeBy: sum
+		sourceColumn: Meta de vendas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Vendas por semana' = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents(caminhoPasta & "Vendas por semana.xlsx"), null, true),
+				    #"Vendas por semana_Sheet" = Fonte{[Item="Vendas por semana",Kind="Sheet"]}[Data],
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"Vendas por semana_Sheet", [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"Semanas", Int64.Type}, {"Vendas", Int64.Type}, {"Meta de vendas", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

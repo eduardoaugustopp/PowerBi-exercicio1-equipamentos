@@ -1,0 +1,98 @@
+[
+  {
+    "ID Produto": 1,
+    "Nome produto": "Capacete",
+    "Categoria": "Proteção",
+    "Marca": "Alpinestars",
+    "Valor": "R$ 500,00",
+    "URL Imagem": "https://dmh0jxq9p49fk.cloudfront.net/Custom/Content/Products/40/40/4040010_capacete-alpinestars-sm5-corp-8300224_s3_638533576419417307.jpg"
+  },
+  {
+    "ID Produto": 2,
+    "Nome produto": "Botas",
+    "Categoria": "Proteção",
+    "Marca": "Alpinestars",
+    "Valor": "R$ 450,00",
+    "URL Imagem": "https://dmh0jxq9p49fk.cloudfront.net/Custom/Content/Products/40/39/4039901_bota-alpinestars-stella-tech-3-2013218_s2_638499933258541349.jpg"
+  },
+  {
+    "ID Produto": 3,
+    "Nome produto": "Luvas",
+    "Categoria": "Proteção",
+    "Marca": "Alpinestars",
+    "Valor": "R$ 120,00",
+    "URL Imagem": "https://dmh0jxq9p49fk.cloudfront.net/Custom/Content/Products/40/14/4014177_luva-alpinestars-radar-23-3561823_s16_637975437125991282.jpg"
+  },
+  {
+    "ID Produto": 4,
+    "Nome produto": "Óculos",
+    "Categoria": "Proteção",
+    "Marca": "Fox Racing",
+    "Valor": "R$ 200,00",
+    "URL Imagem": "https://brmotorsports.vteximg.com.br/arquivos/ids/180035-1000-1000/FOX-MX-OCULOS-AIRSPACE-RKANE-AZUL-LARANJA-3.jpg?v=638169035394600000"
+  },
+  {
+    "ID Produto": 5,
+    "Nome produto": "Calça",
+    "Categoria": "Roupa",
+    "Marca": "Alpinestars",
+    "Valor": "R$ 250,00",
+    "URL Imagem": "https://dmh0jxq9p49fk.cloudfront.net/Custom/Content/Products/40/37/4037018_calca-alpinestars-supertech-ward-24-3723224_s10_638341032770163733.jpg"
+  },
+  {
+    "ID Produto": 6,
+    "Nome produto": "Joelheira",
+    "Categoria": "Proteção",
+    "Marca": "Alpinestars",
+    "Valor": "R$ 150,00",
+    "URL Imagem": "https://dmh0jxq9p49fk.cloudfront.net/Custom/Content/Products/12/75/12750_joelheira-alpinestars-bionic-plus-6506219_s69_638316902566853604.jpg"
+  },
+  {
+    "ID Produto": 7,
+    "Nome produto": "Cotoveleira",
+    "Categoria": "Proteção",
+    "Marca": "Alpinestars",
+    "Valor": "R$ 100,00",
+    "URL Imagem": "https://dmh0jxq9p49fk.cloudfront.net/Custom/Content/Products/12/74/12744_cotoveleira-alpinestars-bionic-plus-6506119_s67_637819192512975195.jpg"
+  },
+  {
+    "ID Produto": 8,
+    "Nome produto": "Camiseta",
+    "Categoria": "Roupa",
+    "Marca": "Alpinestars",
+    "Valor": "R$ 90,00",
+    "URL Imagem": "https://dmh0jxq9p49fk.cloudfront.net/Custom/Content/Products/40/39/4039954_camisa-alpinestars-techstar-imperial-3768224_s12_638533539525809539.jpg"
+  },
+  {
+    "ID Produto": 9,
+    "Nome produto": "Colete",
+    "Categoria": "Roupa",
+    "Marca": "Fox Racing",
+    "Valor": "R$ 350,00",
+    "URL Imagem": "https://brmotorsports.vteximg.com.br/arquivos/ids/179998-1000-1000/FOX-MX-COLETE-BASEFRAME-PRO-D3O-VEST-PRETO-1.jpg?v=638167516770970000"
+  },
+  {
+    "ID Produto": 10,
+    "Nome produto": "Pala",
+    "Categoria": "Acessórios",
+    "Marca": "Fox Racing",
+    "Valor": "R$ 100,00",
+    "URL Imagem": "https://brmotorsports.vteximg.com.br/arquivos/ids/177955-1000-1000/Design-sem-nome--10-.jpg?v=638022409555900000"
+  },
+  {
+    "ID Produto": 11,
+    "Nome produto": "Lente espelhada",
+    "Categoria": "Acessórios",
+    "Marca": "Fox Racing",
+    "Valor": "R$ 250,00",
+    "URL Imagem": "https://brmotorsports.vteximg.com.br/arquivos/ids/180167-1000-1000/FOX-MX-LENTE-AIRSPACE-MAIN-MX20-CROMO-VERMELHO.jpg?v=638175985178770000"
+  },
+  {
+    "ID Produto": 12,
+    "Nome produto": "Mochila de hidratação",
+    "Categoria": "Roupa",
+    "Marca": "Fox Racing",
+    "Valor": "R$ 150,00",
+    "URL Imagem": "https://brmotorsports.vteximg.com.br/arquivos/ids/180123-1000-1000/FOX-BIKE-BOLSA-DE-HIDRATACAO-UTILITY-6L-PRETO-1.jpg?v=638173566513930000"
+  }
+]

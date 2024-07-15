@@ -1,0 +1,63 @@
+table Clientes
+	lineageTag: f479241c-64ce-47b6-a32e-5b30f541f5bf
+
+	column 'ID Consumidor'
+		dataType: int64
+		formatString: 0
+		lineageTag: 47ffafb6-98c8-4145-b321-427f7d57c517
+		summarizeBy: none
+		sourceColumn: ID Consumidor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gênero
+		dataType: string
+		lineageTag: fbdbec5b-e407-4c94-8662-29743ba8388b
+		summarizeBy: none
+		sourceColumn: Gênero
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Estado civil'
+		dataType: string
+		lineageTag: 00443feb-2e50-4638-a3db-8c0a1b4aa84f
+		summarizeBy: none
+		sourceColumn: Estado civil
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Frequência de Compras (por ano)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 850a3abc-ead7-4914-8ed9-9e73d47526f3
+		summarizeBy: none
+		sourceColumn: Frequência de Compras (por ano)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bairro
+		dataType: string
+		lineageTag: 75cc4c61-05e0-4945-81bf-a755b299004c
+		summarizeBy: none
+		sourceColumn: Bairro
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Clientes = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents(caminhoPasta & "Clientes.txt"),[Delimiter="	", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"ID Consumidor", Int64.Type}, {"Gênero", type text}, {"Estado civil", type text}, {"Frequência de Compras (por ano)", Int64.Type}, {"Bairro", type text}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado", each [ID Consumidor] <> null and [ID Consumidor] <> ""),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Linhas Filtradas", each [ID Consumidor] <> null and [ID Consumidor] <> ""),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Linhas Filtradas1",{{"ID Consumidor", Int64.Type}, {"Frequência de Compras (por ano)", Int64.Type}}),
+				    #"Linhas Filtradas2" = Table.SelectRows(#"Tipo Alterado1", each [ID Consumidor] <> null and [ID Consumidor] <> "")
+				in
+				    #"Linhas Filtradas2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

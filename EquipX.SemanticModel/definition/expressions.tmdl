@@ -1,0 +1,63 @@
+/// Diretório dos arquivos
+expression caminhoPasta = "C:\Users\eduar\OneDrive\Área de Trabalho\PowerBi_exercício_1\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 14c92704-9596-448b-998e-5c2d3edcaf6f
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+
+expression Parâmetro1 = #"Arquivo de Amostra" meta [IsParameterQuery=true, BinaryIdentifier=#"Arquivo de Amostra", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 24f56d0b-09eb-429b-b7a5-14788f2cd9f5
+	queryGroup: 'Transformar Arquivo de Vendas\Consultas Auxiliares'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transformar o Arquivo de Exemplo' =
+		let
+		    Fonte = Excel.Workbook(Parâmetro1, null, true),
+		    Vendas_Table = Fonte{[Item="Vendas",Kind="Table"]}[Data]
+		in
+		    Vendas_Table
+	lineageTag: 6e830260-d534-4763-826e-3e2b65661ec8
+	queryGroup: 'Transformar Arquivo de Vendas'
+
+	annotation PBI_ResultType = Table
+
+expression 'Arquivo de Amostra' =
+		let
+		    Fonte = Folder.Files("C:\Users\eduar\OneDrive\Área de Trabalho\PowerBi_exercício_1\Vendas"),
+		    Navegação1 = Fonte{0}[Content]
+		in
+		    Navegação1
+	lineageTag: 5a357f88-49e1-41d0-9620-760c7afde4c6
+	queryGroup: 'Transformar Arquivo de Vendas\Consultas Auxiliares'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transformar Arquivo' =
+		let
+		    Fonte = (Parâmetro1 as binary) => let
+		    Fonte = Excel.Workbook(Parâmetro1, null, true),
+		    Vendas_Table = Fonte{[Item="Vendas",Kind="Table"]}[Data]
+		in
+		    Vendas_Table
+		in
+		    Fonte
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transformar o Arquivo de Exemplo""}" ]
+	lineageTag: 9a2f9bdd-0c45-4b2a-b193-8341474c9f4a
+	queryGroup: 'Transformar Arquivo de Vendas\Consultas Auxiliares'
+
+	annotation PBI_ResultType = Function
+
+expression tradução =
+		let
+		    Fonte = Csv.Document(File.Contents(caminhoPasta & "tradução.csv"),[Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true])
+		in
+		    #"Cabeçalhos Promovidos"
+	lineageTag: 6cdd339b-22af-49e3-bd38-6d98bcbe229c
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

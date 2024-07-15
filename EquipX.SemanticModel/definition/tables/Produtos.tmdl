@@ -1,0 +1,74 @@
+table Produtos
+	lineageTag: bb69886a-a379-440f-84ae-72616a2f751f
+
+	column 'ID Produto'
+		dataType: int64
+		formatString: 0
+		lineageTag: d0e22769-2660-4395-b8c1-9a5679480324
+		summarizeBy: none
+		sourceColumn: ID Produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome produto'
+		dataType: string
+		lineageTag: 68be7016-1ed6-4c51-ae6f-93afe2fc65e3
+		summarizeBy: none
+		sourceColumn: Nome produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria
+		dataType: string
+		lineageTag: ba3cf3e0-2008-4704-b310-6d4243deb022
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marca
+		dataType: string
+		lineageTag: 371b4976-cee8-4b9e-82b5-2fe6f9a5b2e0
+		summarizeBy: none
+		sourceColumn: Marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 0581f9a2-ad7c-4eea-bc4c-93204b7d63d6
+		summarizeBy: none
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column 'URL Imagem'
+		dataType: string
+		lineageTag: fa393b46-5701-4e3b-a04a-84a9ae7df4b1
+		summarizeBy: none
+		sourceColumn: URL Imagem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Produtos = m
+		mode: import
+		source = ```
+				let
+				    Fonte = Excel.Workbook(File.Contents(caminhoPasta & "Produtos_EquipX.xlsx"), null, true),
+				    Página1_Sheet = Fonte{[Item="Página1",Kind="Sheet"]}[Data],
+				    #"Linhas Inferiores Removidas" = Table.RemoveLastN(Página1_Sheet,7),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"Linhas Inferiores Removidas", [PromoteAllScalars=true]),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Cabeçalhos Promovidos",{"Column10", "Column11", "Column12", "Column7", "Column8", "Column9"}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colunas Removidas",{{"ID Produto", Int64.Type}, {"Nome produto", type text}, {"Categoria", type text}, {"Marca", type text}, {"Valor", Currency.Type}, {"URL Imagem", type text}})
+				    
+				in
+				    #"Tipo Alterado"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+
